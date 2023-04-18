@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Yethee\Tiktoken\Util;
 
-use function array_map;
 use function bin2hex;
 use function hexdec;
 use function pack;
@@ -20,7 +19,11 @@ final class EncodeUtil
      */
     public static function toBytes(string $text): array
     {
-        return array_map(hexdec(...), str_split(bin2hex($text), 2));
+        $hex = [];
+        foreach (str_split(bin2hex($text), 2) as $char) {
+            $hex[] = hexdec($char);
+        }
+        return $hex;
     }
 
     /**

@@ -15,8 +15,8 @@ final class EncoderProviderTest extends TestCase
     /**
      * @param non-empty-string $modelName
      * @param non-empty-string $encoding
+     * @dataProvider getEncoderForModelProvider
      */
-    #[DataProvider('getEncoderForModelProvider')]
     public function testGetEncoderForModel(string $modelName, string $encoding): void
     {
         $provider = new EncoderProvider();
@@ -40,14 +40,16 @@ final class EncoderProviderTest extends TestCase
     }
 
     /**
-     * @return iterable<array{non-empty-string, non-empty-string}>
+     * @return array
      *
      * @psalm-api
      */
-    public static function getEncoderForModelProvider(): iterable
+    public function getEncoderForModelProvider(): array
     {
-        yield 'text-davinci-003' => ['text-davinci-003', 'p50k_base'];
-        yield 'text-davinci-edit-001' => ['text-davinci-edit-001', 'p50k_edit'];
-        yield 'gpt-3.5-turbo-0301' => ['gpt-3.5-turbo-0301', 'cl100k_base'];
+        return [
+            ['text-davinci-003', 'p50k_base'],
+            ['text-davinci-edit-001', 'p50k_edit'],
+            ['gpt-3.5-turbo-0301', 'cl100k_base']
+        ];
     }
 }
